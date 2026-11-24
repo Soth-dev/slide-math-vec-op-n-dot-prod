@@ -17,6 +17,8 @@
 			touch: true,
 			width: 960,
 			height: 640,
+			keyboard: true,
+			loop: false,
 			margin: 0.05
 		});
 		await deck.initialize();
