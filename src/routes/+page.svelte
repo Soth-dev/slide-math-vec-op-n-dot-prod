@@ -10,11 +10,14 @@
 	onMount(async () => {
 		deck = new Reveal(deckEl, {
 			hash: false, // avoids conflict with SvelteKit's hash router
-			controls: false,
+			controls: true,
 			progress: true,
 			center: true,
 			transition: 'slide',
-			touch: true
+			touch: true,
+			width: 960,
+			height: 640,
+			margin: 0.05
 		});
 		await deck.initialize();
 	});
@@ -43,14 +46,16 @@
 				<span class="vec"><span>4</span><span>−1</span></span>
 			</div>
 			<div class="card fragment">
-				<span class="tag">a</span>u + v = <span class="vec"><span>2+4</span><span>3+(−1)</span></span>
+				<span class="tag">a</span>u + v =
+				<span class="vec"><span>2+4</span><span>3+(−1)</span></span>
 				= <span class="vec ans"><span>6</span><span>2</span></span>
 				<div class="why">
 					Why: add vectors entry by entry — first with first, second with second.
 				</div>
 			</div>
 			<div class="card fragment">
-				<span class="tag">b</span>u − v = <span class="vec"><span>2−4</span><span>3−(−1)</span></span>
+				<span class="tag">b</span>u − v =
+				<span class="vec"><span>2−4</span><span>3−(−1)</span></span>
 				= <span class="vec ans"><span>−2</span><span>4</span></span>
 				<div class="why">
 					Why: subtract entry by entry. Subtracting −1 is the same as adding 1, so 3 − (−1) = 4.
@@ -59,7 +64,9 @@
 		</section>
 
 		<section>
-			<h2 class="mb-1.5 text-[38px] font-bold text-[#2f5bea]">Q1 · Scalar Multiples &amp; Length</h2>
+			<h2 class="mb-1.5 text-[38px] font-bold text-[#2f5bea]">
+				Q1 · Scalar Multiples &amp; Length
+			</h2>
 			<div class="card">
 				<span class="tag">c</span>3u − 2v
 				<div class="why">
@@ -87,7 +94,7 @@
 			<div class="flex items-center gap-5">
 				<svg
 					viewBox="0 0 560 380"
-					class="h-380 w-560 shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc]"
+					class="h-[380px] w-[560px] shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc]"
 				>
 					<defs>
 						<pattern id="g" width="50" height="50" patternUnits="userSpaceOnUse" x="30" y="15">
@@ -167,14 +174,14 @@
 					<div class="hd text-[#2f5bea]" style="animation-delay:1.1s"><b>u</b> = (2, 3)</div>
 					<div class="hd text-[#e8830c]" style="animation-delay:2.3s"><b>v</b> = (4, −1)</div>
 					<div class="hd text-[#1a8f5a]" style="animation-delay:3.5s">
-						<b>u+v</b> = (6, 2)<br /><span class="text-[26px] text-[#5b6679]"
-							>diagonal of the parallelogram</span
-						>
+						<b>u+v</b> = (6, 2)<br /><span class="text-[26px] text-[#5b6679]">
+							diagonal of the parallelogram
+						</span>
 					</div>
 					<div class="hd text-[#a23fd1]" style="animation-delay:4.7s">
-						<b>u−v</b> = (−2, 4)<br /><span class="text-[26px] text-[#5b6679]"
-							>joins the tip of v to the tip of u</span
-						>
+						<b>u−v</b> = (−2, 4)<br /><span class="text-[26px] text-[#5b6679]">
+							joins the tip of v to the tip of u
+						</span>
 					</div>
 				</div>
 			</div>
@@ -241,7 +248,7 @@
 			<div class="flex items-center gap-5">
 				<svg
 					viewBox="0 0 560 380"
-					class="h-380 w-560 shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc]"
+					class="h-[380px] w-[560px] shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc]"
 				>
 					<line class="ax" x1="165" y1="260" x2="435" y2="260" />
 					<line class="ax" x1="300" y1="340" x2="300" y2="60" />
@@ -314,7 +321,7 @@
 	</div>
 </div>
 
-<div
+<!--<div
 	class="fixed right-4 z-9 flex gap-2"
 	style="bottom: calc(14px + env(safe-area-inset-bottom, 0px));"
 >
@@ -334,10 +341,10 @@
 	>
 		Next →
 	</button>
-</div>
+</div>-->
 
 <style>
-:global(html, body) {
+	:global(html, body) {
 		height: 100%;
 		margin: 0;
 		padding: 0;

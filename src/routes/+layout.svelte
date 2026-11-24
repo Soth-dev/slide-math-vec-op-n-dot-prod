@@ -9,13 +9,11 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-<h1>test</h1>
-<body data-sveltekit-preload-data="hover" style="display: contents">
-	{@render children()}
-</body>
+
+{@render children()}
 
 <style>
-	body {
+	:global(body) {
 		height: 100%;
 		margin: 0;
 		background: var(--bg);
