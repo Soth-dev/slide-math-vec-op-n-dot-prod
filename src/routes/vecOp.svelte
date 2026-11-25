@@ -1,3 +1,51 @@
+<script lang="ts">
+	// Q1: 2D vectors (default u = (2, 3), v = (4, -1))
+	let u1x = $state(2);
+	let u1y = $state(3);
+	let v1x = $state(4);
+	let v1y = $state(-1);
+
+	const q1Sum = $derived({ x: u1x + v1x, y: u1y + v1y });
+	const q1Diff = $derived({ x: u1x - v1x, y: u1y - v1y });
+	const q1LenU = $derived(Math.hypot(u1x, u1y));
+	let q1Touched = $state(false);
+	let q2Touched = $state(false);
+
+	function angleDeg(dx: number, dy: number) {
+		return (Math.atan2(dy, dx) * 180) / Math.PI;
+	}
+
+	// Q1 SVG endpoints & arrowhead angles
+	const q1U = $derived({
+		x: 180 + u1x * 50,
+		y: 265 - u1y * 50,
+		deg: angleDeg(u1x * 50, -u1y * 50)
+	});
+	const q1V = $derived({
+		x: 180 + v1x * 50,
+		y: 265 - v1y * 50,
+		deg: angleDeg(v1x * 50, -v1y * 50)
+	});
+	const q1S = $derived({
+		x: 180 + q1Sum.x * 50,
+		y: 265 - q1Sum.y * 50,
+		deg: angleDeg(q1Sum.x * 50, -q1Sum.y * 50)
+	});
+	const q1D = $derived({
+		x: 180 + q1Diff.x * 50,
+		y: 265 - q1Diff.y * 50,
+		deg: angleDeg(q1Diff.x * 50, -q1Diff.y * 50)
+	});
+
+	function resetQ1() {
+		u1x = 2;
+		u1y = 3;
+		v1x = 4;
+		v1y = -1;
+		q1Touched = false;
+	}
+</script>
+
 <section>
 	<h2 class="mb-1.5 text-[38px] font-bold text-[#2f5bea]">Q1 · Vector Operations</h2>
 	<div class="mb-5 text-2xl text-[#5b6679]">Given u and v, compute (a) u + v and (b) u − v</div>
@@ -46,10 +94,11 @@
 
 <section>
 	<h2 class="mb-1.5 text-[38px] font-bold text-[#2f5bea]">Q1 · Graph of the Vectors</h2>
-	<div class="flex items-center gap-5">
+	<div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-5">
 		<svg
 			viewBox="0 0 560 380"
-			class="h-[380px] w-[560px] shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc]"
+			class:no-anim={q1Touched}
+			class="aspect-[560/380] max-h-[52vh] w-full max-w-[540px] shrink-0 rounded-[14px] border border-[#d9deea] bg-[#f4f6fc] md:max-h-[360px] md:w-auto md:flex-1"
 		>
 			<defs>
 				<pattern id="g" width="50" height="50" patternUnits="userSpaceOnUse" x="30" y="15">
@@ -61,82 +110,180 @@
 			<line class="ax" x1="180" y1="15" x2="180" y2="365" />
 			<text x="518" y="284" fill="currentColor" font-size="16">x</text>
 			<text x="188" y="28" fill="currentColor" font-size="16">y</text>
-			<line class="dash hd" style="animation-delay:2.4s" x1="280" y1="115" x2="480" y2="165" />
-			<line class="dash hd" style="animation-delay:2.4s" x1="380" y1="315" x2="480" y2="165" />
-			<line class="dash hd" style="animation-delay:4.6s" x1="380" y1="315" x2="280" y2="115" />
+
+			<!-- Dashed parallelogram & difference lines -->
+			<line
+				class="dash hd"
+				style="animation-delay:2.4s"
+				x1={q1U.x}
+				y1={q1U.y}
+				x2={q1S.x}
+				y2={q1S.y}
+			/>
+			<line
+				class="dash hd"
+				style="animation-delay:2.4s"
+				x1={q1V.x}
+				y1={q1V.y}
+				x2={q1S.x}
+				y2={q1S.y}
+			/>
+			<line
+				class="dash hd"
+				style="animation-delay:4.6s"
+				x1={q1V.x}
+				y1={q1V.y}
+				x2={q1U.x}
+				y2={q1U.y}
+			/>
+
+			<!-- u -->
 			<path
 				class="dr"
 				pathLength="1"
 				stroke="#2f5bea"
-				d="M180 265L280 115"
+				d="M180 265L{q1U.x} {q1U.y}"
 				style="animation-delay:.2s"
 			/>
 			<polygon
 				class="hd"
 				fill="#2f5bea"
 				points="0,0 -14,-6 -14,6"
-				transform="translate(280 115) rotate(-56.3)"
+				transform="translate({q1U.x} {q1U.y}) rotate({q1U.deg})"
 				style="animation-delay:1.1s"
 			/>
-			<text class="gt hd" fill="#2f5bea" x="288" y="112" style="animation-delay:1.1s">u</text>
+			<text class="gt hd" fill="#2f5bea" x={q1U.x + 8} y={q1U.y - 3} style="animation-delay:1.1s">
+				u
+			</text>
+
+			<!-- v -->
 			<path
 				class="dr"
 				pathLength="1"
 				stroke="#e8830c"
-				d="M180 265L380 315"
+				d="M180 265L{q1V.x} {q1V.y}"
 				style="animation-delay:1.4s"
 			/>
 			<polygon
 				class="hd"
 				fill="#e8830c"
 				points="0,0 -14,-6 -14,6"
-				transform="translate(380 315) rotate(14.04)"
+				transform="translate({q1V.x} {q1V.y}) rotate({q1V.deg})"
 				style="animation-delay:2.3s"
 			/>
-			<text class="gt hd" fill="#e8830c" x="386" y="334" style="animation-delay:2.3s">v</text>
+			<text class="gt hd" fill="#e8830c" x={q1V.x + 6} y={q1V.y + 19} style="animation-delay:2.3s">
+				v
+			</text>
+
+			<!-- u + v -->
 			<path
 				class="dr"
 				pathLength="1"
 				stroke="#1a8f5a"
-				d="M180 265L480 165"
+				d="M180 265L{q1S.x} {q1S.y}"
 				style="animation-delay:2.6s"
 			/>
 			<polygon
 				class="hd"
 				fill="#1a8f5a"
 				points="0,0 -14,-6 -14,6"
-				transform="translate(480 165) rotate(-18.43)"
+				transform="translate({q1S.x} {q1S.y}) rotate({q1S.deg})"
 				style="animation-delay:3.5s"
 			/>
-			<text class="gt hd" fill="#1a8f5a" x="470" y="150" style="animation-delay:3.5s">u+v</text>
+			<text class="gt hd" fill="#1a8f5a" x={q1S.x - 10} y={q1S.y - 15} style="animation-delay:3.5s">
+				u+v
+			</text>
+
+			<!-- u - v -->
 			<path
 				class="dr"
 				pathLength="1"
 				stroke="#a23fd1"
-				d="M180 265L80 65"
+				d="M180 265L{q1D.x} {q1D.y}"
 				style="animation-delay:3.8s"
 			/>
 			<polygon
 				class="hd"
 				fill="#a23fd1"
 				points="0,0 -14,-6 -14,6"
-				transform="translate(80 65) rotate(-116.57)"
+				transform="translate({q1D.x} {q1D.y}) rotate({q1D.deg})"
 				style="animation-delay:4.7s"
 			/>
-			<text class="gt hd" fill="#a23fd1" x="92" y="60" style="animation-delay:4.7s">u−v</text>
+			<text class="gt hd" fill="#a23fd1" x={q1D.x + 12} y={q1D.y - 5} style="animation-delay:4.7s">
+				u−v
+			</text>
 		</svg>
-		<div class="text-[23px] leading-[1.7]">
-			<div class="hd text-[#2f5bea]" style="animation-delay:1.1s"><b>u</b> = (2, 3)</div>
-			<div class="hd text-[#e8830c]" style="animation-delay:2.3s"><b>v</b> = (4, −1)</div>
-			<div class="hd text-[#1a8f5a]" style="animation-delay:3.5s">
-				<b>u+v</b> = (6, 2)<br /><span class="text-[26px] text-[#5b6679]">
-					diagonal of the parallelogram
-				</span>
+
+		<!-- Sliders & Live Readout -->
+		<div
+			class="w-full max-w-[300px] space-y-2 rounded-xl border border-[#d9deea] bg-[#f4f6fc] p-3 text-base"
+			onclick={(e) => e.stopPropagation()}
+		>
+			<div class="flex items-center justify-between font-bold text-[#2f5bea]">
+				<span>u = ({u1x}, {u1y})</span>
+				<button
+					type="button"
+					onclick={resetQ1}
+					class="cursor-pointer rounded border border-[#d9deea] bg-white px-2 py-0.5 text-xs text-[#1b2333]"
+				>
+					Reset
+				</button>
 			</div>
-			<div class="hd text-[#a23fd1]" style="animation-delay:4.7s">
-				<b>u−v</b> = (−2, 4)<br /><span class="text-[26px] text-[#5b6679]">
-					joins the tip of v to the tip of u
-				</span>
+			<label class="flex items-center justify-between gap-2 text-sm">
+				<span>uₓ</span>
+				<input
+					type="range"
+					min="-5"
+					max="5"
+					step="1"
+					bind:value={u1x}
+					oninput={() => (q1Touched = true)}
+					class="w-40"
+				/>
+			</label>
+			<label class="flex items-center justify-between gap-2 text-sm">
+				<span>uᵧ</span>
+				<input
+					type="range"
+					min="-4"
+					max="4"
+					step="1"
+					bind:value={u1y}
+					oninput={() => (q1Touched = true)}
+					class="w-40"
+				/>
+			</label>
+
+			<div class="pt-1 font-bold text-[#e8830c]">v = ({v1x}, {v1y})</div>
+			<label class="flex items-center justify-between gap-2 text-sm">
+				<span>vₓ</span>
+				<input
+					type="range"
+					min="-5"
+					max="5"
+					step="1"
+					bind:value={v1x}
+					oninput={() => (q1Touched = true)}
+					class="w-40"
+				/>
+			</label>
+			<label class="flex items-center justify-between gap-2 text-sm">
+				<span>vᵧ</span>
+				<input
+					type="range"
+					min="-4"
+					max="4"
+					step="1"
+					bind:value={v1y}
+					oninput={() => (q1Touched = true)}
+					class="w-40"
+				/>
+			</label>
+
+			<div class="border-t border-[#d9deea] pt-2 text-sm leading-relaxed">
+				<div class="font-semibold text-[#1a8f5a]">u + v = ({q1Sum.x}, {q1Sum.y})</div>
+				<div class="font-semibold text-[#a23fd1]">u − v = ({q1Diff.x}, {q1Diff.y})</div>
+				<div class="text-[#5b6679]">‖u‖ = {q1LenU.toFixed(2)}</div>
 			</div>
 		</div>
 	</div>
