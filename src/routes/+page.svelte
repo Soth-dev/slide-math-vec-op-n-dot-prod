@@ -118,7 +118,7 @@
 	:global(.reveal .fragment) {
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(24px) scale(0.97);
+		transform: translateY(54px) scale(0.8);
 		transition:
 			opacity 0.5s ease,
 			transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -146,7 +146,7 @@
 	}
 	:global(.reveal .slides > section.present h1),
 	:global(.reveal .slides > section.present h2) {
-		animation: drop 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+		animation: drop 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
 	:global(.fragment.visible .ans) {
 		animation: pop 0.6s 0.15s both;
@@ -155,7 +155,7 @@
 	@keyframes slin {
 		from {
 			opacity: 0;
-			transform: translateX(60px);
+			transform: translateX(600px);
 		}
 		to {
 			opacity: 1;
@@ -165,7 +165,7 @@
 	@keyframes drop {
 		from {
 			opacity: 0;
-			transform: translateY(-24px);
+			transform: translateY(-34px);
 		}
 		to {
 			opacity: 1;

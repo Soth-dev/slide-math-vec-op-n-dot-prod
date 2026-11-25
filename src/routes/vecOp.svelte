@@ -46,7 +46,7 @@
 	}
 </script>
 
-<section>
+<section data-auto-animate>
 	<h2 class="mb-1.5 text-[38px] font-bold text-[#2f5bea]">Q1 · Vector Operations</h2>
 	<div class="mb-5 text-2xl text-[#5b6679]">Given u and v, compute (a) u + v and (b) u − v</div>
 	<div class="card flex flex-wrap items-center gap-3">
