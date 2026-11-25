@@ -310,7 +310,9 @@
 				/>
 			</label>
 			<label class="flex items-center justify-between gap-2">
-				<span>u_z</span>
+				<span class="leading-none">
+					u<sub class="align-baseline text-[0.72em] leading-none">z</sub>
+				</span>
 				<input
 					type="range"
 					min="-4"
@@ -348,7 +350,9 @@
 				/>
 			</label>
 			<label class="flex items-center justify-between gap-2">
-				<span>v_z</span>
+				<span class="leading-none">
+					u<sub class="align-baseline text-[0.72em] leading-none">z</sub>
+				</span>
 				<input
 					type="range"
 					min="-4"
