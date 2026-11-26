@@ -9,7 +9,6 @@
 	const q1Diff = $derived({ x: u1x - v1x, y: u1y - v1y });
 	const q1LenU = $derived(Math.hypot(u1x, u1y));
 	let q1Touched = $state(false);
-	let q2Touched = $state(false);
 
 	function angleDeg(dx: number, dy: number) {
 		return (Math.atan2(dy, dx) * 180) / Math.PI;
@@ -217,13 +216,15 @@
 		<!-- Sliders & Live Readout -->
 		<div
 			class="w-full max-w-[300px] space-y-2 rounded-xl border border-[#d9deea] bg-[#f4f6fc] p-3 text-base"
-			onclick={(e) => e.stopPropagation()}
 		>
 			<div class="flex items-center justify-between font-bold text-[#2f5bea]">
 				<span>u = ({u1x}, {u1y})</span>
 				<button
 					type="button"
-					onclick={resetQ1}
+					onclick={(e) => {
+						e.stopPropagation();
+						resetQ1();
+					}}
 					class="cursor-pointer rounded border border-[#d9deea] bg-white px-2 py-0.5 text-xs text-[#1b2333]"
 				>
 					Reset
@@ -237,6 +238,7 @@
 					max="5"
 					step="1"
 					bind:value={u1x}
+					onclick={(e) => e.stopPropagation()}
 					oninput={() => (q1Touched = true)}
 					class="w-40"
 				/>
@@ -249,6 +251,7 @@
 					max="4"
 					step="1"
 					bind:value={u1y}
+					onclick={(e) => e.stopPropagation()}
 					oninput={() => (q1Touched = true)}
 					class="w-40"
 				/>
@@ -263,6 +266,7 @@
 					max="5"
 					step="1"
 					bind:value={v1x}
+					onclick={(e) => e.stopPropagation()}
 					oninput={() => (q1Touched = true)}
 					class="w-40"
 				/>
@@ -275,6 +279,7 @@
 					max="4"
 					step="1"
 					bind:value={v1y}
+					onclick={(e) => e.stopPropagation()}
 					oninput={() => (q1Touched = true)}
 					class="w-40"
 				/>
